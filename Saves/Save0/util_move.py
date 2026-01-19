@@ -100,7 +100,6 @@ def goto_nearest(coords, current_x, current_y, size, quick_select=None):
         nearest = distance_x, distance_y, i, total_distance
 
         if nearest[3] <= quick_select:
-            quick_print("QUICK_SELECT")
             break
     do_move = goto_distance(nearest[0], nearest[1], current_x, current_y)
     coords.pop(nearest[2])
