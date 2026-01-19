@@ -894,7 +894,10 @@ target-version = "py311"
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
 select = ["ALL"]
-ignore = ["D107", "D104", "D211", "D213", 'COM812', 'D203', 'ISC001', 'PGH003', 'ANN', 'E711', 'FBT002','FBT003','PLW0603','PERF401','SIM108','D100','D103','INP001','ERA001']
+ignore = [
+    "D107", "D104", "D211", "D213", 'COM812', 'D203', 'ISC001', 'PGH003',
+    'ANN', 'E711', 'FBT002','FBT003','PLW0603','PERF401','SIM108','D100',
+    'D103','INP001','ERA001', 'SIM113']
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
@@ -902,6 +905,11 @@ unfixable = ["E501"]
 
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+task-tags = ["NOTE"]
+
+[tool.ruff.lint.pycodestyle]
+ignore-overlong-task-comments = true
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
