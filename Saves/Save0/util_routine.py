@@ -1,6 +1,6 @@
 from util_harvest import try_harvest
 from util_item import item_priority
-from util_move import goto_coord, move_sequence
+from util_move import move_sequence
 
 
 def basic_routine(size, plant_func, req_loc=True, skip_entity=None):
@@ -11,7 +11,8 @@ def basic_routine(size, plant_func, req_loc=True, skip_entity=None):
     #   req_loc: bool  # whether plant_func requires x, y coordinates
     #   skip_entity: Entities | None  # entity type to skip harvesting
     # Returns: tuple[int, int]  # final x, y position
-    x, y = goto_coord(0, 0, get_pos_x(), get_pos_y(), size)
+    x, y = get_pos_x(), get_pos_y()
+    start_x, start_y = get_pos_x(), get_pos_y()
     complete = False
     while not complete:
         try_harvest(skip_entity)
@@ -20,7 +21,7 @@ def basic_routine(size, plant_func, req_loc=True, skip_entity=None):
         else:
             plant_func()
         x, y = move_sequence(x, y, size)
-        complete = (x, y) == (0, 0)
+        complete = (x, y) == (start_x, start_y)
     return x, y
 
 

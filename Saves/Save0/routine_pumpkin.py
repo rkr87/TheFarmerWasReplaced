@@ -45,7 +45,7 @@ def _replant_pumpkins(x, y, size):
     global dead
     still_dead = []
     use_water = False
-    if len(dead) <= (size // 6) + 1:
+    if len(dead) <= 5:
         use_water = True
     while len(dead) > 0:
         x, y = goto_nearest(dead, x, y, size)
