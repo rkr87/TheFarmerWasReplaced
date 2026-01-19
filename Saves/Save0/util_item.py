@@ -21,6 +21,16 @@ def water():
         return True
     return False
 
+def await_water(entity=None):
+    # Water entity and wait until harvestable
+    # Returns: bool  # True if watering occurred
+    quick_grow = True
+    while not can_harvest() and entity in {None, get_entity_type()}:
+        if quick_grow:
+            water()
+            quick_grow = False
+    return quick_grow
+
 
 def fertilise(amount=1):
     # Use fertilizer if available

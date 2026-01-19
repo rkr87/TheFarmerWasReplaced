@@ -3,7 +3,7 @@ def _prepare_ground(ground):
     # Args:
     #   ground: Grounds | None  # desired ground type
     # Returns: None
-    if ground != None and ground != get_ground_type():
+    if ground not in {None, get_ground_type()}:
         till()
 
 def _should_plant(entity, requires_replant):
