@@ -1,5 +1,9 @@
+import routine_carrot
+import routine_grass
 import routine_maze
-import routines
+import routine_pumpkin
+import routine_sunflower
+import routine_wood
 from util_routine import select_routine
 
 # Routine configuration list
@@ -8,11 +12,11 @@ from util_routine import select_routine
 #   target_amount: int,               # stop condition / goal
 #   priority_increment: int | None    # priority increment for over target item
 routine_def = [
-    # [routines.grass, Items.Hay, 500000, 5000],
-    # [routines.wood, Items.Wood, 500000, 5000],
-    # [routines.carrot, Items.Carrot, 500000, 5000],
-    # [routines.pumpkin, Items.Pumpkin, 500000, 5000],
-    [routines.sunflower, Items.Power, 20000, 5000],
+    [routine_grass, Items.Hay, 500000, 5000],
+    [routine_wood, Items.Wood, 500000, 5000],
+    [routine_carrot, Items.Carrot, 500000, 5000],
+    [routine_pumpkin, Items.Pumpkin, 500000, 5000],
+    [routine_sunflower, Items.Power, 20000, None],
 ]
 
 while True:
