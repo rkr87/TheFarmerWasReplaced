@@ -3,7 +3,7 @@ from util_plant import plant_entity
 from util_routine import basic_routine
 
 
-def _plant_logic(x, y, size=None):  # noqa: ARG001
+def _plant_logic(x, y, size):  # noqa: ARG001
     # Plant either a tree or a bush based on position
     # Args:
     #   x: int  # world x coordinate
@@ -16,9 +16,11 @@ def _plant_logic(x, y, size=None):  # noqa: ARG001
         plant_entity(Entities.Bush)
 
 
-def run(size):
+def run(x, y, size):
     # Run tree/bush planting routine
     # Args:
+    #   x: int  # world x coordinate
+    #   y: int  # world y coordinate
     #   size: int  # world size
-    # Returns: None
-    basic_routine(size, _plant_logic)
+    # Returns: tuple[int, int]  # drone location after completion
+    return basic_routine(x, y, size, _plant_logic)

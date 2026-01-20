@@ -32,3 +32,10 @@ def get_distance_y(curr_y, tar_y, size):
     if distance[0] < distance[1]:
         return distance[0], North
     return distance[1], South
+
+def cycle_steps(size):
+    # Generate a full cycle of steps for a square grid.
+    # Args:
+    #   size: int  # world/grid size (one dimension)
+    # Returns: range  # total steps covering size * size positions
+    return range(size * size)

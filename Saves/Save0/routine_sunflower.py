@@ -27,18 +27,21 @@ def _harvest_flowers(x, y, size):
     #   x: int  # start x coordinate
     #   y: int  # start y coordinate
     #   size: int
-    # Returns: None
+    # Returns: tuple[int, int]  # drone location after completion
     for coords in flowers:
         while len(coords) > 0:
             x, y = goto_nearest(coords, x, y, size)
             await_harvest()
             plant_entity(Entities.Carrot, Grounds.Soil)
+    return x, y
 
 
-def run(size):
+def run(x, y, size):
     # Run sunflower planting and harvesting routine
     # Args:
+    #   x: int
+    #   y: int
     #   size: int  # world size
-    # Returns: None
-    x, y = basic_routine(size, _plant_logic, True, Entities.Sunflower)
-    _harvest_flowers(x, y, size)
+    # Returns: tuple[int, int]  # drone location after completion
+    x, y = basic_routine(x, y, size, _plant_logic, Entities.Sunflower)
+    return _harvest_flowers(x, y, size)

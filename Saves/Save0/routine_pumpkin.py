@@ -9,20 +9,20 @@ from util_routine import basic_routine
 dead = []
 
 
-def _plant_logic():
+def _plant_logic(x, y, size):  # noqa: ARG001
     # Attempt to plant a pumpkin at a location
     # Returns: bool  # True if planted item
     return plant_entity(Entities.Pumpkin, Grounds.Soil, True)
 
 
-def _dead_logic(x, y, size=None):  # noqa: ARG001
+def _dead_logic(x, y, size):
     # Handle failed pumpkin locations
     # Args:
     #   x: int
     #   y: int
     #   size: int | None  # world size (unused)
     # Returns: None
-    if _plant_logic():
+    if _plant_logic(x, y, size):
         dead.append((x, y))
 
 def _replant_pumpkins(x, y, size):
@@ -37,19 +37,22 @@ def _replant_pumpkins(x, y, size):
     while len(dead) > 0:
         x, y = goto_nearest(dead, x, y, size)
         await_water(Entities.Pumpkin)
-        if _plant_logic():
+        if _plant_logic(x, y, size):
             still_dead.append((x, y))
     dead = still_dead
     return x, y
 
 
-def run(size):
+def run(x, y, size):
     # Run full pumpkin farming routine
     # Args:
-    #   size: int  # world size
-    # Returns: None
-    basic_routine(size, _plant_logic, False, Entities.Pumpkin)
-    x, y = basic_routine(size, _dead_logic, True, Entities.Pumpkin)
+    #   x: int  # current x coordinate
+    #   y: int  # current y coordinate
+    #   size: int
+    # Returns: tuple[int, int]  # drone location after completion
+    x, y = basic_routine(x, y, size, _plant_logic, Entities.Pumpkin)
+    x, y = basic_routine(x, y, size, _dead_logic, Entities.Pumpkin)
     while len(dead) > 0:
         x, y = _replant_pumpkins(x, y, size)
     await_harvest()
+    return x, y

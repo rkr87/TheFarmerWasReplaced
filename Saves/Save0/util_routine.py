@@ -1,27 +1,22 @@
+from util_distance import cycle_steps
 from util_harvest import try_harvest
 from util_item import item_priority
 from util_move import move_sequence
 
 
-def basic_routine(size, plant_func, req_loc=True, skip_entity=None):
+def basic_routine(x, y, size, function, skip_entity=None):
     # Execute a basic farming routine
     # Args:
+    #   x: int
+    #   y: int
     #   size: int  # world/grid size
     #   plant_func: Callable[..., Any]  # function to plant an entity
-    #   req_loc: bool  # whether plant_func requires x, y coordinates
     #   skip_entity: Entities | None  # entity type to skip harvesting
     # Returns: tuple[int, int]  # final x, y position
-    x, y = get_pos_x(), get_pos_y()
-    start_x, start_y = get_pos_x(), get_pos_y()
-    complete = False
-    while not complete:
+    for _ in cycle_steps(size):
         try_harvest(skip_entity)
-        if req_loc:
-            plant_func(x, y, size)
-        else:
-            plant_func()
+        function(x, y, size)
         x, y = move_sequence(x, y, size)
-        complete = (x, y) == (start_x, start_y)
     return x, y
 
 

@@ -66,6 +66,7 @@ def goto_distance(distance_x, distance_y, current_x, current_y):
         current_y = get_pos_y()
     return current_x, current_y
 
+
 def _quick_select(num_coords, size):
     # Calculate quick exit threshold based on world size and number of coords.
     # Args:
@@ -74,26 +75,27 @@ def _quick_select(num_coords, size):
     #    base: int - base minimum threshold
     # Returns: int - dynamic quick select threshold
     max_coords = size * size
-    coord_factor = num_coords / max_coords * size
-    world_factor = size / 32
-    threshold = coord_factor * world_factor
-    return 3 + threshold  # ensure at least 1
+    base_threshold = (size // 2) * .25
+    coord_factor = 1 - (num_coords / max_coords)
+    threshold = base_threshold / coord_factor
+    return max(1, threshold)  # ensure at least 1
 
-def goto_nearest(coords, current_x, current_y, size, quick_select=None):
-    # Move to the nearest coordinate and remove it from the list
+
+def goto_nearest(coords, x, y, size, remove_coord=True):
+    # Move to the nearest coordinate and optionally remove it from the list
     # Args:
     #   coords: list[tuple[int, int]]  # list of target coordinates
-    #   current_x: int
-    #   current_y: int
+    #   x: int
+    #   y: int
     #   size: int  # world/grid size
-    #   quick_select: int  # early exit threshold
+    #   remove_coord: int = True  # remove selected coord from list
     # Returns: tuple[int, int]  # updated x, y
     num_coords = len(coords)
-    quick_select = quick_select or _quick_select(num_coords, size)
+    quick_select = _quick_select(num_coords, size)
     nearest = None, None, -1, size  # (dist_x, dist_y, index, total_distance)
     for i in range(num_coords):
-        distance_x = get_distance_x(current_x, coords[i][0], size)
-        distance_y = get_distance_y(current_y, coords[i][1], size)
+        distance_x = get_distance_x(x, coords[i][0], size)
+        distance_y = get_distance_y(y, coords[i][1], size)
         total_distance = distance_x[0] + distance_y[0]
         if total_distance >= nearest[3]:
             continue
@@ -101,6 +103,7 @@ def goto_nearest(coords, current_x, current_y, size, quick_select=None):
 
         if nearest[3] <= quick_select:
             break
-    do_move = goto_distance(nearest[0], nearest[1], current_x, current_y)
-    coords.pop(nearest[2])
+    do_move = goto_distance(nearest[0], nearest[1], x, y)
+    if remove_coord:
+        coords.pop(nearest[2])
     return do_move
