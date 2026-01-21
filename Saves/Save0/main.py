@@ -17,6 +17,7 @@ routine_def = [
     [routine_carrot, Items.Carrot, 500000, 5000],
     [routine_pumpkin, Items.Pumpkin, 500000, 5000],
     [routine_sunflower, Items.Power, 20000, None],
+    [routine_maze, Items.Gold, 20000, None],
 ]
 
 x = get_pos_x()
