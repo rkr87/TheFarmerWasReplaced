@@ -13,13 +13,16 @@ def item_priority(item, min_threshold, increment=None):
     return ((item_count - min_threshold) // increment) + 2
 
 
-def water():
-    # Use water if available
-    # Returns: bool  # True if used, False otherwise
-    if num_items(Items.Water) > 0:
-        use_item(Items.Water)
+def _use_item(item, amount = 1):
+    if num_items(item) > 0:
+        use_item(item, amount)
         return True
     return False
+
+def water(amount = 1):
+    # Use water if available
+    # Returns: bool  # True if used, False otherwise
+    return _use_item(Items.Water, amount)
 
 def await_water(entity=None):
     # Water entity and wait until harvestable
@@ -37,7 +40,11 @@ def fertilise(amount=1):
     # Args:
     #   amount: int  # amount of fertilizer to use
     # Returns: bool  # True if used, False otherwise
-    if num_items(Items.Fertilizer) > 0:
-        use_item(Items.Fertilizer, amount)
-        return True
-    return False
+    return _use_item(Items.Fertilizer, amount)
+
+def apply_weird_substance(amount=1):
+    # Use weird substance if available
+    # Args:
+    #   amount: int  # amount of fertilizer to use
+    # Returns: bool  # True if used, False otherwise
+    return _use_item(Items.Weird_Substance, amount)
