@@ -1,42 +1,16 @@
 from util_distance import get_distance_x, get_distance_y
 
-directions = [North, East, South, West]
+DIRECTIONS = [North, East, South, West]
+TURN_RIGHT = [1, 0, -1, -2]
 
-
-def _try_turn(current_face, offset):
-    index = (current_face + offset) % 4
-    direction = directions[index]
-    if can_move(direction):
-        move(direction)
-        return True, index
-    return False, current_face
-
-
-def go_back(face):
-    return _try_turn(face, -2)
-
-
-def turn_left(face):
-    return _try_turn(face, -1)
-
-
-def turn_right(face):
-    return _try_turn(face, 1)
-
-
-def straight_ahead(face):
-    return _try_turn(face, 0)
-
-
-def move_chain(current_face=0):
+def move_priority_right(current_face):
     new_face = current_face
-    move_priority = [1, 0, -1, -2]
-    for move in move_priority:
-        result, new_face = _try_turn(current_face, move)
-        if result:
+    for offset in TURN_RIGHT:
+        new_face = (current_face + offset) % 4
+        direction = DIRECTIONS[new_face]
+        if move(direction):
             break
     return new_face
-
 
 def _move_distance(steps, direction):
     # Move a fixed number of steps in one direction
