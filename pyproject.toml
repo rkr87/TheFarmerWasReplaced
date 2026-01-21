@@ -881,7 +881,10 @@ builtins = [
     "quick_print",
     "get_ground_type", 
     "plant", 
-    "till"
+    "till",
+    "can_move",
+    "num_unlocked",
+    "Unlocks"
 ]
 
 line-length = 79
